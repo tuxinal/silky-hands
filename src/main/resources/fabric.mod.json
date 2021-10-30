@@ -1,0 +1,29 @@
+{
+    "schemaVersion": 1,
+    "id": "silky-hands",
+    "version": "${version}",
+
+    "name": "Silky Hands",
+    "description": "Make blocks drop the same item",
+    "authors": ["Tuxinal"],
+    "contact": {
+        "sources": "https://github.com/tuxinal/silky-hands"
+    },
+
+    "license": "MIT",
+    "icon": "assets/silky-hands/icon.png",
+
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "xyz.tuxinal.silkyHands.Init"
+        ]
+    },
+
+    "mixins": ["silky-hands.mixin.json"],
+    "depends": {
+        "fabricloader": ">=0.11.3",
+        "minecraft": "1.17.x",
+        "java": ">=16"
+    }
+}

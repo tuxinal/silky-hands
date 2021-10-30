@@ -1,0 +1,12 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "xyz.tuxinal.silkyHands.mixin",
+    "compatibilityLevel": "JAVA_16",
+    "mixins": ["InteractionManagerMixin", "BlockMixin"],
+    "client": [],
+    "server": [],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
