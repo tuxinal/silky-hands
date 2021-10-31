@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.util.registry.Registry;
 import xyz.tuxinal.silkyHands.utils.ConfigParser;
@@ -15,7 +15,7 @@ import xyz.tuxinal.silkyHands.utils.ConfigParser;
 @Mixin(ServerPlayerInteractionManager.class)
 public class InteractionManagerMixin {
     @Redirect(method = "tryBreakBlock", at = @At(value = "INVOKE", target = "canHarvest(Lnet/minecraft/block/BlockState;)Z"))
-    private boolean redirect(PlayerEntity player, BlockState blockState) {
+    private boolean redirect(ServerPlayerEntity player, BlockState blockState) {
         if (player.getScoreboardTags().contains(ConfigParser.getTag())) {
             if (player.getMainHandStack().isEmpty()) {
                 if (!Arrays.stream(ConfigParser.getIgnoredBlocks())
