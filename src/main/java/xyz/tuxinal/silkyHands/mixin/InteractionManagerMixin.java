@@ -14,7 +14,7 @@ import xyz.tuxinal.silkyHands.utils.ConfigParser;
 
 @Mixin(ServerPlayerInteractionManager.class)
 public class InteractionManagerMixin {
-    @Redirect(method = "tryBreakBlock", at = @At(value = "INVOKE", target = "canHarvest(Lnet/minecraft/block/BlockState;)Z"))
+    @Redirect(method = "tryBreakBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;canHarvest(Lnet/minecraft/block/BlockState;)Z"))
     private boolean redirect(ServerPlayerEntity player, BlockState blockState) {
         if (player.getScoreboardTags().contains(ConfigParser.getTag())) {
             if (player.getMainHandStack().isEmpty()) {
