@@ -1,26 +1,29 @@
 package xyz.tuxinal.silkyHands.mixin;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import java.util.Arrays;
 
-import net.minecraft.server.network.ServerPlayerEntity;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
+
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
+import net.minecraft.util.registry.Registry;
 import xyz.tuxinal.silkyHands.utils.ConfigParser;
 
 @Mixin(ServerPlayerInteractionManager.class)
 public class InteractionManagerMixin {
-    @Shadow
-    private ServerPlayerEntity player;
-
-    @ModifyVariable(method = "tryBreakBlock", at = @At("STORE"), ordinal = 1)
-    private boolean redirect(boolean canHarvest) {
+    @Redirect(method = "tryBreakBlock", at = @At(value = "INVOKE", target = "canHarvest(Lnet/minecraft/block/BlockState;)Z"))
+    private boolean redirect(PlayerEntity player, BlockState blockState) {
         if (player.getScoreboardTags().contains(ConfigParser.getTag())) {
             if (player.getMainHandStack().isEmpty()) {
-                return true;
+                if (!Arrays.stream(ConfigParser.getIgnoredBlocks())
+                        .anyMatch(Registry.BLOCK.getId(blockState.getBlock()).toString()::equals)) {
+                    return true;
+                }
             }
         }
-        return canHarvest;
+        return player.canHarvest(blockState);
     }
 }
