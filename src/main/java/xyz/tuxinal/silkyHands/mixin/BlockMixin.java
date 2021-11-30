@@ -1,7 +1,6 @@
 package xyz.tuxinal.silkyHands.mixin;
 
-import java.util.Arrays;
-
+import org.apache.commons.lang3.ArrayUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -42,8 +41,8 @@ public class BlockMixin {
         if (!player.getMainHandStack().isEmpty()) {
             return;
         }
-        if (Arrays.stream(ConfigParser.getIgnoredBlocks())
-                .anyMatch(Registry.BLOCK.getId(blockState.getBlock()).toString()::equals)) {
+        if (ArrayUtils.contains(ConfigParser.getIgnoredBlocks(),
+                Registry.BLOCK.getId(blockState.getBlock()).toString())) {
             return;
         }
         Block.dropStack(world, blockPos, new ItemStack(blockState.getBlock()));
