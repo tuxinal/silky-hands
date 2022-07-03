@@ -6,21 +6,21 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.Registry;
 import xyz.tuxinal.silkyHands.utils.ConfigParser;
 
-@Mixin(PlayerEntity.class)
+@Mixin(Player.class)
 public class PlayerEntityMixin {
-    @Inject(method = "canHarvest(Lnet/minecraft/block/BlockState;)Z", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "hasCorrectToolForDrops(Lnet/minecraft/world/level/block/state/BlockState;)Z", at = @At("RETURN"), cancellable = true)
     private void injected(BlockState blockState, CallbackInfoReturnable<Boolean> ci) {
-        PlayerEntity player = ((PlayerEntity) (Object) this);
+        Player player = ((Player) (Object) this);
         // make sure the player has the required tag
-        if (!player.getScoreboardTags().contains(ConfigParser.getTag())) {
+        if (!player.getTags().contains(ConfigParser.getTag())) {
             return;
         }
-        if (!player.getMainHandStack().isEmpty()) {
+        if (!player.getMainHandItem().isEmpty()) {
             return;
         }
         // make sure the broken block is not ignored
@@ -28,7 +28,7 @@ public class PlayerEntityMixin {
         // breaking block (BlockMixin))
         // ideally this should only be checked once
         if (ArrayUtils.contains(ConfigParser.getIgnoredBlocks(),
-                Registry.BLOCK.getId(blockState.getBlock()).toString())) {
+                Registry.BLOCK.getKey(blockState.getBlock()).toString())) {
             return;
         }
         ci.setReturnValue(true);
