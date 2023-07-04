@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import xyz.tuxinal.silkyHands.utils.ConfigParser;
 
 @Mixin(Player.class)
@@ -23,7 +23,7 @@ public class PlayerEntityMixin {
             return;
         }
         if (ArrayUtils.contains(ConfigParser.getIgnoredBlocks(),
-                Registry.BLOCK.getKey(blockState.getBlock()).toString())) {
+                BuiltInRegistries.BLOCK.getKey(blockState.getBlock()))) {
             return;
         }
         ci.setReturnValue(true);

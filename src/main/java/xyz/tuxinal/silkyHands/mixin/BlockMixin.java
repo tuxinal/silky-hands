@@ -17,7 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import xyz.tuxinal.silkyHands.utils.ConfigParser;
 
@@ -40,7 +40,7 @@ public class BlockMixin {
             return originalDrops;
         }
         if (ArrayUtils.contains(ConfigParser.getIgnoredBlocks(),
-                Registry.BLOCK.getKey(blockState.getBlock()).toString())) {
+                BuiltInRegistries.BLOCK.getKey(blockState.getBlock()))) {
             return originalDrops;
         }
         if (originalDrops.stream().anyMatch(stack -> stack.getItem() == blockState.getBlock().asItem())) {
