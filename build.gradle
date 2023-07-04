@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'fabric-loom' version '1.2-SNAPSHOT'
 	id 'maven-publish'
 	id 'io.github.juuxel.loom-quiltflower' version '1.7.1'
 }
@@ -17,12 +17,22 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+  maven {
+    url 'https://maven.parchmentmc.org'
+  }
+}
+
+loom {
+	accessWidenerPath = file("src/main/resources/silky-hands.accesswidener")
 }
 
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
+  mappings loom.layered() {
+    officialMojangMappings()
+    parchment("org.parchmentmc.data:parchment-1.19.2:2022.08.10@zip")
+  }
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
