@@ -51,8 +51,8 @@ public class BlockMixin {
         // broken
         // as far as i can tell all vanilla multiblocks work fine with this
         var block = blockState.getBlock();
-        var lootContext = block.getLootTable();
-        var lootTable = serverLevel.getServer().getLootTables().get(lootContext);
+        var lootResource = block.getLootTable();
+        var lootTable = serverLevel.getServer().getLootData().getLootTable(lootResource);
         if (Stream.of(lootTable.pools[0].entries[0].conditions)
                 .anyMatch(condition -> condition.getType() == LootItemConditions.BLOCK_STATE_PROPERTY)) {
             return originalDrops;
