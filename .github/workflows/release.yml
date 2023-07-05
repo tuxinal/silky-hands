@@ -28,4 +28,4 @@ jobs:
         with:
           modrinth-id: "tVcbuHLB"
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}

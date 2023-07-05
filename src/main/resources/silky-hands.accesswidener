@@ -1,0 +1,4 @@
+accessWidener	v1 named
+accessible field net/minecraft/world/level/storage/loot/LootTable pools [Lnet/minecraft/world/level/storage/loot/LootPool;
+accessible field net/minecraft/world/level/storage/loot/LootPool entries [Lnet/minecraft/world/level/storage/loot/entries/LootPoolEntryContainer;
+accessible field net/minecraft/world/level/storage/loot/entries/LootPoolEntryContainer conditions [Lnet/minecraft/world/level/storage/loot/predicates/LootItemCondition;
