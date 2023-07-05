@@ -24,7 +24,7 @@
     "accessWidener": "silky-hands.accesswidener",
     "depends": {
         "fabricloader": ">=0.14.7",
-        "minecraft": ">=1.19 <=1.19.2",
+        "minecraft": ">=1.19.3 <=1.19.4",
         "java": ">=17"
     }
 }
